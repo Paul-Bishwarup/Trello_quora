@@ -13,13 +13,17 @@ import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "user_auth")
+@Table(name = "question")
 @NamedQueries({
+  @NamedQuery(name = "getAllQuestions", query = "select q from QuestionEntity q"),
   @NamedQuery(
-      name = "userAuthByAccessToken",
-      query = "select u from UserAuthEntity u where u.accessToken=:accessToken")
+      name = "getQuestionById",
+      query = "select q from QuestionEntity q where q.uuid=:uuid"),
+  @NamedQuery(
+      name = "getQuestionByUser",
+      query = "select q from QuestionEntity q where q.userEntity=:user")
 })
-public class UserAuthEntity {
+public class QuestionEntity {
 
   @Id
   @Column(name = "id")
@@ -27,30 +31,23 @@ public class UserAuthEntity {
   private Integer id;
 
   @Column(name = "uuid")
-  @NotNull
   @Size(max = 200)
+  @NotNull
   private String uuid;
+
+  @Column(name = "content")
+  @Size(max = 500)
+  @NotNull
+  private String content;
+
+  @Column(name = "date")
+  @NotNull
+  private ZonedDateTime date;
 
   @ManyToOne
   @OnDelete(action = OnDeleteAction.CASCADE)
   @JoinColumn(name = "user_id")
   private UserEntity userEntity;
-
-  @Column(name = "access_token")
-  @NotNull
-  @Size(max = 500)
-  private String accessToken;
-
-  @Column(name = "expires_at")
-  @NotNull
-  private ZonedDateTime expiresAt;
-
-  @Column(name = "login_at")
-  @NotNull
-  private ZonedDateTime loginAt;
-
-  @Column(name = "logout_at")
-  private ZonedDateTime logoutAt;
 
   public Integer getId() {
     return id;
@@ -68,44 +65,28 @@ public class UserAuthEntity {
     this.uuid = uuid;
   }
 
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public ZonedDateTime getDate() {
+    return date;
+  }
+
+  public void setDate(ZonedDateTime date) {
+    this.date = date;
+  }
+
   public UserEntity getUserEntity() {
     return userEntity;
   }
 
   public void setUserEntity(UserEntity userEntity) {
     this.userEntity = userEntity;
-  }
-
-  public String getAccessToken() {
-    return accessToken;
-  }
-
-  public void setAccessToken(String accessToken) {
-    this.accessToken = accessToken;
-  }
-
-  public ZonedDateTime getExpiresAt() {
-    return expiresAt;
-  }
-
-  public void setExpiresAt(ZonedDateTime expiresAt) {
-    this.expiresAt = expiresAt;
-  }
-
-  public ZonedDateTime getLoginAt() {
-    return loginAt;
-  }
-
-  public void setLoginAt(ZonedDateTime loginAt) {
-    this.loginAt = loginAt;
-  }
-
-  public ZonedDateTime getLogoutAt() {
-    return logoutAt;
-  }
-
-  public void setLogoutAt(ZonedDateTime logoutAt) {
-    this.logoutAt = logoutAt;
   }
 
   @Override
