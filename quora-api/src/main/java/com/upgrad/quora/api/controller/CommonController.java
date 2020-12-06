@@ -20,6 +20,8 @@ public class CommonController {
 
     /**
      * Get the user details provided the userId.
+     * @param accessToken Access token to authenticate the user who is requesting for user details.
+     * @param userId user id of the user whose details has to be fetched.
      * @return
      * @throws AuthorizationFailedException - if the access token is invalid or already logged out.
      * @throws UserNotFoundException - if the user with given id is not present in the records.

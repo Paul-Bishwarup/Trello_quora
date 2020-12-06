@@ -20,8 +20,10 @@ public class AdminController {
     private AdminService adminService;
 
 
-    /***
+    /**
      * Get the user details provided the userId.
+     * @param userId user id of the user whose details has to be fetched.
+     * @param accessToken Access token to authenticate the user who is requesting for user details.
      * @return
      * @throws AuthorizationFailedException - if the access token is invalid or already logged out or user is not an admin or user with enetered uuid does not exist
      * @throws UserNotFoundException - if the user with given id is not present in the records.
