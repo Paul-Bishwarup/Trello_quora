@@ -30,13 +30,13 @@ public class AnswerService {
   /**
    * creates an answer in the database.
    *
-   * @param answerEntity Contains the answer content.
+   * @param answerEntity Contains the answers.
    * @param accessToken To authenticate the user who is trying to create an answer.
    * @param questionId Id of the question for which the answer is being created.
    * @return
-   * @throws AuthorizationFailedException ATHR-001 If the user has not signed in and ATHR-002 If the
-   *     * user is already signed out
-   * @throws InvalidQuestionException QUES-001 if the question doesn't exist in database.
+   * @throws AuthorizationFailedException ATHR-001 If the user is not signed in and ATHR-002 If the
+   *     * user is signed out
+   * @throws InvalidQuestionException QUES-001 if the question does not exist in database.
    */
   @Transactional(propagation = Propagation.REQUIRED)
   public AnswerEntity createAnswer(
